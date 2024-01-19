@@ -30,12 +30,17 @@ app.get("/api/:date", (req, res) => {
   } else {
     dateObject = new Date(parseInt(input));
     if (isNaN(dateObject.getTime())) {
-      return res.json({ error: "Invalid Date or Timestamp" });
+      return res.json({ error: "Invalid Date" });
     }
   }
   const unixTimestamp = dateObject.getTime();
   const utcDate = dateObject.toUTCString();
   res.json({ unix: unixTimestamp, utc: utcDate });
+});
+
+app.get("/api/", (req, res) => {
+  const date = new Date();
+  res.json({ unix: date.getTime(), utc: date.toUTCString() });
 });
 
 // listen for requests :)
